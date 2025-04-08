@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #ededed;
+}
+
+.header-img {
+  width: 100%;
+  height: 60vh; /* or use clamp() for responsive control */
+  min-height: 760px; /* optional minimum */
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url('Assets/searchImg/header.jpg') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  position: relative;
+}
+
+.header-title {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  text-align: center;
+  color: var(--Yellow, #ffd15b);
+  text-align: center;
+  font-family: Anton;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.header-logo {
+  position: absolute;
+  padding: 20px;
+  transform: translateY(-750px);
+  text-align: center;
+}
+
+.searchBar-container {
+  width: 954px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: #fff;
+
+  /* position: absolute; */
+}
+
+.searchBar-search {
+  color: var(--Grey, #7a7a7a);
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 25px 30px;
+}
+
+.searchBar-button {
+  background-color: black;
+}
+
+.header-searchbar-title-container {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
