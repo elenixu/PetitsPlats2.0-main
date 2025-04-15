@@ -38,16 +38,25 @@
         </div>
         <div class="searchBar-container">
           <div class="searchBar-search">
-            Rechercher une recette, un ingrédient, ...
-          </div>
-          <div class="searchBar-button">
-            <i class="fas fa-magnifying-glass" style="color: #ffffff"></i>
+            <input
+              type="text"
+              class="searchBar-input"
+              placeholder="Rechercher une recette, un ingrédient, ..."
+            />
+            <div class="searchBar-button">
+              <i class="fas fa-magnifying-glass" style="color: #ffffff"></i>
+            </div>
           </div>
         </div>
       </div>
       <div class="header-logo">
         <img src="Assets/searchImg/Logo.png" alt="Header logo" />
       </div>
+      <div class="cards-container">
+        <div class="cards-container" id="cards-root"></div>
+      </div>
     </header>
+    <script src="index.js" defer></script>
+    <script src="recipes.js"></script>
   </body>
 </html>
