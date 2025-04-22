@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = document.createElement('div');
     card.classList.add('card-container');
 
+    const imageWrapper = document.createElement('div');
+    imageWrapper.classList.add('image-wrapper');
+
     const img = document.createElement('img');
     img.classList.add('card-img');
     img.src = `Assets/JSON recipes/${recipe.image}`;
@@ -25,15 +28,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Title
     const title = document.createElement('div');
-    title.classList.add('card-title');
+    title.classList.add('card-recette-titre');
     title.textContent = recipe.name;
     textBox.appendChild(title);
 
-    // Time & Servings
+    // Time
     const info = document.createElement('div');
-    info.classList.add('card-info');
-    info.textContent = ` ${recipe.time} min | ${recipe.servings} part${recipe.servings > 1 ? 's' : ''}`;
-    textBox.appendChild(info);
+    info.classList.add('card-time');
+    info.textContent = `${recipe.time}min`;
+
+    imageWrapper.appendChild(img);
+    imageWrapper.appendChild(info);
+    card.appendChild(imageWrapper);
+
+    // Description
+    const description = document.createElement('p');
+    description.classList.add('card-description');
+    description.textContent = recipe.description;
+    textBox.appendChild(description);
+
+    card.appendChild(img);
+    card.appendChild(textBox);
+    cardContainer.appendChild(card);
 
     // Ingredients
     const ingredientsList = document.createElement('ul');
@@ -49,15 +65,5 @@ document.addEventListener('DOMContentLoaded', () => {
       ingredientsList.appendChild(li);
     });
     textBox.appendChild(ingredientsList);
-
-    // Description
-    const description = document.createElement('p');
-    description.classList.add('card-description');
-    description.textContent = recipe.description;
-    textBox.appendChild(description);
-
-    card.appendChild(img);
-    card.appendChild(textBox);
-    cardContainer.appendChild(card);
   });
 });
