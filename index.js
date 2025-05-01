@@ -1,17 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
+/// Get the recipes from the global window object
+let searchQuery = '';
+
+function renderRecipes(recipes) {
   const cardContainer = document.getElementById('cards-root');
+  cardContainer.innerHTML = ''; // clear previous content
 
-  if (!cardContainer) {
-    console.error('Missing #cards-root');
-    return;
-  }
-
-  if (!window.recipes || !Array.isArray(window.recipes)) {
-    console.error('Missing or invalid window.recipes data');
-    return;
-  }
-
-  window.recipes.forEach((recipe) => {
+  recipes.forEach((recipe) => {
     const card = document.createElement('div');
     card.classList.add('card-container');
 
@@ -26,13 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const textBox = document.createElement('div');
     textBox.classList.add('card-container-text');
 
-    // Title
     const title = document.createElement('div');
     title.classList.add('card-recette-titre');
     title.textContent = recipe.name;
     textBox.appendChild(title);
 
-    // Time
     const info = document.createElement('div');
     info.classList.add('card-time');
     info.textContent = `${recipe.time}min`;
@@ -41,7 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     imageWrapper.appendChild(info);
     card.appendChild(imageWrapper);
 
-    // Description
+    const recetteTitle = document.createElement('h2');
+    recetteTitle.textContent = 'RECETTE';
+    recetteTitle.className = 'recette-title';
+    textBox.appendChild(recetteTitle);
+
     const description = document.createElement('p');
     description.classList.add('card-description');
     description.textContent = recipe.description;
@@ -49,21 +45,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     card.appendChild(img);
     card.appendChild(textBox);
-    cardContainer.appendChild(card);
 
-    // Ingredients
+    const ingredientsTitle = document.createElement('h2');
+    ingredientsTitle.textContent = 'Ingrédients';
+    ingredientsTitle.className = 'recette-title';
+    textBox.appendChild(ingredientsTitle);
+
     const ingredientsList = document.createElement('ul');
     ingredientsList.classList.add('card-ingredients');
+
     recipe.ingredients.forEach((item) => {
       const li = document.createElement('li');
-      let line = item.ingredient;
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'ingredient-name';
+      nameSpan.textContent = item.ingredient;
+
+      const quantitySpan = document.createElement('span');
+      quantitySpan.className = 'ingredient-quantity';
       if (item.quantity !== undefined) {
-        line += `: ${item.quantity}`;
-        if (item.unit) line += ` ${item.unit}`;
+        quantitySpan.textContent = `${item.quantity}${item.unit ? ' ' + item.unit : ''}`;
       }
-      li.textContent = line;
+
+      li.appendChild(nameSpan);
+      li.appendChild(quantitySpan);
       ingredientsList.appendChild(li);
     });
+
     textBox.appendChild(ingredientsList);
+    cardContainer.appendChild(card);
   });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const cardContainer = document.getElementById('cards-root');
+
+  if (!cardContainer) {
+    console.error('Missing #cards-root');
+    return;
+  }
+
+  if (!window.recipes || !Array.isArray(window.recipes)) {
+    console.error('Missing or invalid window.recipes data');
+    return;
+  }
+
+  renderRecipes(window.recipes);
 });

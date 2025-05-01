@@ -81,6 +81,32 @@ body {
   transform: translate(-50%, -50%);
 }
 
+/* Filters! */
+
+.filters{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+ flex-direction: row;
+ gap: 65px;
+}
+
+select {
+  appearance: none;        /* Removes default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+}
+
+.dropdown {
+  display: inline-flex;
+  padding: 17px 16px;
+  align-items: center;
+  gap: 63px;
+  border-radius: 11px;
+background: #FFF;
+}
+
 /* Cards! */
 
 .cards-container {
@@ -108,6 +134,43 @@ body {
   object-fit: cover;
   border-radius: 21px 21px 0 0;
 }
+.card-ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 12px;
+}
+
+.card-ingredients li {
+  flex: 0 1 calc(50% - 12px);
+  box-sizing: border-box;
+}
+
+.ingredient-name {
+  color: var(--Black, #1B1B1B);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: block;
+  margin-bottom: 2px; 
+}
+
+.ingredient-quantity {
+  color: var(--Grey, #7A7A7A);
+font-family: Manrope;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+  display: block;
+  margin-top: 0; 
+}
+
+
 
 .card-time {
   border-radius: 14px;
@@ -133,6 +196,23 @@ body {
 
 .card-container-text {
   padding: 32px 25px;
+  color: var(--Black, #1B1B1B);
+font-family: Manrope;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.recette-title {
+  color: var(--Grey, #7A7A7A);
+font-family: Manrope;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: 1.08px;
+text-transform: uppercase;
 }
 
 .card-recette-titre {
@@ -152,3 +232,5 @@ body {
   font-weight: 400;
   line-height: normal;
 }
+
+

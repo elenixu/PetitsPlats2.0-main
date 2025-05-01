@@ -52,11 +52,22 @@
       <div class="header-logo">
         <img src="Assets/searchImg/Logo.png" alt="Header logo" />
       </div>
+      <div>
+        <div class="filters">
+          <div class="dropdown" id="ingredient-filter"></div>
+          <div class="dropdown" id="ustensil-filter"></div>
+          <div class="dropdown" id="appliance-filter"></div>
+        </div>
+        <div id="selected-filters" style="display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0;"></div>
+
+      </div>
+
       <div class="cards-container">
         <div class="cards-container" id="cards-root"></div>
       </div>
     </header>
     <script src="index.js" defer></script>
+    <script src="searchBar.js"></script>
     <script src="recipes.js"></script>
   </body>
 </html>
