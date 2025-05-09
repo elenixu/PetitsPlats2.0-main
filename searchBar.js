@@ -85,7 +85,7 @@ let selectedAppliances = [];
 function applyFilters() {
   let filtered = window.recipes;
 
-  // 🟢 General text search (after 3 letters)
+  // General text search (after 3 letters)
   if (searchQuery.length >= 3) {
     filtered = filtered.filter(
       (recipe) =>
@@ -97,7 +97,7 @@ function applyFilters() {
     );
   }
 
-  // 🟢 Ingredient tag filters
+  // Ingredient tag filters
   if (selectedIngredients.length > 0) {
     filtered = filtered.filter((r) =>
       selectedIngredients.every((ingredient) =>
@@ -106,7 +106,7 @@ function applyFilters() {
     );
   }
 
-  // 🟢 Ustensil tag filters
+  // Ustensil tag filters
   if (selectedUstensils.length > 0) {
     filtered = filtered.filter((r) =>
       selectedUstensils.every((ustensil) =>
@@ -115,7 +115,7 @@ function applyFilters() {
     );
   }
 
-  // 🟢 Appliance tag filters
+  // Appliance tag filters
   if (selectedAppliances.length > 0) {
     filtered = filtered.filter((r) =>
       selectedAppliances.includes(r.appliance.toLowerCase())

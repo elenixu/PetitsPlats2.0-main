@@ -73,6 +73,7 @@ function renderRecipes(recipes) {
 
     textBox.appendChild(ingredientsList);
     cardContainer.appendChild(card);
+    updateCounter();
   });
 }
 
@@ -90,4 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderRecipes(window.recipes);
+  updateCounter();
 });
+
+function updateCounter() {
+  const recipeCards = document.querySelectorAll('.card-container');
+  const counter = document.querySelector('.counter');
+  if (counter) {
+    counter.innerHTML = `<h3>${recipeCards.length} recettes</h3>`;
+  }
+}
