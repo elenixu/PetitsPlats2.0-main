@@ -1,7 +1,10 @@
 // Main searchbar
 
+let allRecipes = [];
+
 document.addEventListener('DOMContentLoaded', () => {
-  const { ingredients, utensils, appliances } = getUniqueValues(window.recipes);
+  allRecipes = window.recipeFetch();
+  const { ingredients, utensils, appliances } = getUniqueValues(allRecipes);
 
   renderDropdown('ingredient-filter', ingredients, (val) => {
     if (!selectedIngredients.includes(val)) {
@@ -27,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  renderRecipes(window.recipes);
+  renderRecipes(allRecipes);
 });
 
 document.querySelector('.searchBar-input').addEventListener('input', (e) => {
-  searchQuery = e.target.value.trim().toLowerCase();
+  window.searchQuery = e.target.value.trim().toLowerCase();
   applyFilters(); // triggers combined search + filters
 });
 
@@ -57,7 +60,7 @@ function getUniqueValues(recipes) {
   };
 }
 
-// // render dropdown
+// render dropdown
 function renderDropdown(id, values, onChange) {
   const container = document.getElementById(id);
   const select = document.createElement('select');
@@ -83,16 +86,16 @@ let selectedUstensils = [];
 let selectedAppliances = [];
 
 function applyFilters() {
-  let filtered = window.recipes;
+  let filtered = allRecipes;
 
   // General text search (after 3 letters)
-  if (searchQuery.length >= 3) {
+  if (window.searchQuery.length >= 3) {
     filtered = filtered.filter(
       (recipe) =>
-        recipe.name.toLowerCase().includes(searchQuery) ||
-        recipe.description.toLowerCase().includes(searchQuery) ||
+        recipe.name.toLowerCase().includes(window.searchQuery) ||
+        recipe.description.toLowerCase().includes(window.searchQuery) ||
         recipe.ingredients.some((ing) =>
-          ing.ingredient.toLowerCase().includes(searchQuery)
+          ing.ingredient.toLowerCase().includes(window.searchQuery)
         )
     );
   }
@@ -133,13 +136,26 @@ function updateSelectedFilters() {
 
   function createTag(label, onRemove) {
     const tag = document.createElement('div');
-    tag.classList.add('filter-tag');
+    tag.style.display = 'flex';
+    tag.style.alignItems = 'center';
+    tag.style.background = '#ddd';
+    tag.style.padding = '5px 8px';
+    tag.style.borderRadius = '12px';
+    tag.style.fontSize = '14px';
+    tag.style.margin = '5px';
+
     const text = document.createElement('span');
     text.textContent = label;
     tag.appendChild(text);
 
     const close = document.createElement('button');
     close.textContent = '×';
+    close.style.marginLeft = '8px';
+    close.style.border = 'none';
+    close.style.background = 'transparent';
+    close.style.cursor = 'pointer';
+    close.style.fontSize = '16px';
+
     close.addEventListener('click', onRemove);
     tag.appendChild(close);
 

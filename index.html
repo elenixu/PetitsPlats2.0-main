@@ -21,6 +21,10 @@
       href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
 
     <title>Les Petits Plats</title>
   </head>
@@ -53,25 +57,59 @@
         <img src="Assets/searchImg/Logo.png" alt="Header logo" />
       </div>
       <div>
-        <div class="filters">
-          <div class="dropdown" id="ingredient-filter"></div>
-          <div class="dropdown" id="ustensil-filter"></div>
-          <div class="dropdown" id="appliance-filter"></div>
+        <div class="filters-container">
+          <!-- <div class="filters">
+            <div class="dropdown" id="ingredient-filter"></div>
+            <div class="dropdown" id="ustensil-filter"></div>
+            <div class="dropdown" id="appliance-filter"></div>
+          </div> -->
+          <div class="counter"></div>
         </div>
-        <div class="counter"></div>
+        <!-- Ingredients -->
+        <div class="dropdown2">
+          <div class="dropdown-btn2" id="dropdownButton2">
+            <span class="dropdownText2" id="dropdownText2">Ingrédients</span>
+            <i
+              class="fa-solid fa-chevron-down dropdown-icon2"
+              id="dropdownIcon2"
+            ></i>
+          </div>
+          <div class="dropdown-list2" id="dropdownList2"></div>
+        </div>
 
-        <div
-          id="selected-filters"
-          style="display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0"
-        ></div>
+        <!-- Utensils -->
+        <div class="dropdown2">
+          <div class="dropdown-btn2" id="dropdownButton3">
+            <span class="dropdownText2" id="dropdownText3">Ustensiles</span>
+            <i
+              class="fa-solid fa-chevron-down dropdown-icon2"
+              id="dropdownIcon3"
+            ></i>
+          </div>
+          <div class="dropdown-list2" id="dropdownList3"></div>
+        </div>
+
+        <!-- Appliances -->
+        <div class="dropdown2">
+          <div class="dropdown-btn2" id="dropdownButton4">
+            <span class="dropdownText2" id="dropdownText4">Appareils</span>
+            <i
+              class="fa-solid fa-chevron-down dropdown-icon2"
+              id="dropdownIcon4"
+            ></i>
+          </div>
+          <div class="dropdown-list2" id="dropdownList4"></div>
+        </div>
       </div>
+      <div class="selected-filters" id="selected-filters"></div>
 
       <div class="cards-container">
         <div class="cards-container" id="cards-root"></div>
       </div>
     </header>
+    <script src="recipes.js"></script>
     <script src="index.js" defer></script>
     <script src="searchBar.js"></script>
-    <script src="recipes.js"></script>
+    <script src="filters.js"></script>
   </body>
 </html>

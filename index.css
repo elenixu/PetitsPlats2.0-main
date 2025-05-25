@@ -83,6 +83,12 @@ body {
 
 /* Filters! */
 
+.filters-container {
+  display: flex;
+  justify-content: space-between;
+ 
+}
+
 .filters{
   display: flex;
   justify-content: flex-start;
@@ -232,5 +238,124 @@ text-transform: uppercase;
   font-weight: 400;
   line-height: normal;
 }
+
+.counter {
+  color: var(--Black, #1B1B1B);
+font-family: Anton;
+font-size: 21px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+
+/* filter2 */
+
+.dropdown2 {
+  position: relative;
+  display: flex;
+padding: 17px 16px;
+align-items: center;
+border: none;
+border-radius: 11px;
+background: #FFF;
+width: fit-content;
+}
+
+.dropdown-btn2 {
+  width: 100%;
+  background-color: white;
+  cursor: pointer;
+  text-align: left;
+  border: none;
+}
+
+.dropdown-list2 {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+
+  background: white;
+  display: none;
+  z-index: 1;
+
+  color: var(--Black, #1B1B1B);
+font-family: Manrope;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.dropdown-list2 div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-list2 div:hover {
+  background: #FFD15B;
+}
+
+.show {
+  display: block;
+}
+
+.dropdown-icon2 {
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-icon2.rotate {
+  transform: rotate(180deg);
+}
+
+.dropdownText2 {
+  color: var(--Black, #1B1B1B);
+font-family: Manrope;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.filter-tag  {
+display: inline-flex;
+padding: 17px 18px;
+align-items: center;
+gap: 60px;
+border-radius: 10px;
+background: #FFD15B;
+
+color: #000;
+font-family: Manrope;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.selected-filters:empty {
+  display: none;
+}
+
+.filter-tag button {
+  all: unset; /* removes all browser defaults */
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 700;
+  
+}
+
+.dropdown-search-input {
+  display: flex;
+ margin: 20px;
+ padding: 10px;
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 
 
