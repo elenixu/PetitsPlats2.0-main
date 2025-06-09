@@ -1,7 +1,7 @@
 // Filter custom container
 
 const dropdownBtn2 = document.getElementById('dropdownButton2');
-const dropdownList2 = document.getElementById('dropdownList2');
+const dropdownList2 = document.getElementById('ingredient-filter');
 const dropdownIcon2 = document.getElementById('dropdownIcon2');
 const dropdownText2 = document.getElementById('dropdownText2');
 dropdownText2.textContent = 'Ingrédients';
@@ -80,7 +80,7 @@ function populateDropdownIngredients(ingredients) {
 }
 
 function populateDropdownUtensils(utensils) {
-  const list = document.getElementById('dropdownList3');
+  const list = document.getElementById('ustensil-filter');
   const text = document.getElementById('dropdownText3');
   const icon = document.getElementById('dropdownIcon3');
   const btn = document.getElementById('dropdownButton3');
@@ -126,7 +126,7 @@ function populateDropdownUtensils(utensils) {
   });
 
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('#dropdownButton3')) {
+    if (!e.target.closest('.dropdown2')) {
       list.classList.remove('show');
       icon.style.transform = 'rotate(0deg)';
     }
@@ -134,7 +134,7 @@ function populateDropdownUtensils(utensils) {
 }
 
 function populateDropdownAppliances(appliances) {
-  const list = document.getElementById('dropdownList4');
+  const list = document.getElementById('appliance-filter');
   const text = document.getElementById('dropdownText4');
   const icon = document.getElementById('dropdownIcon4');
   const btn = document.getElementById('dropdownButton4');
@@ -180,7 +180,7 @@ function populateDropdownAppliances(appliances) {
   });
 
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('#dropdownButton4')) {
+    if (!e.target.closest('#.dropdown2')) {
       list.classList.remove('show');
       icon.style.transform = 'rotate(0deg)';
     }

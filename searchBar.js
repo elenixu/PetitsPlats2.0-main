@@ -1,35 +1,5 @@
 // Main searchbar
 
-document.addEventListener('DOMContentLoaded', () => {
-  const { ingredients, utensils, appliances } = getUniqueValues(window.recipes);
-
-  renderDropdown('ingredient-filter', ingredients, (val) => {
-    if (!selectedIngredients.includes(val)) {
-      selectedIngredients.push(val);
-      updateSelectedFilters();
-      applyFilters();
-    }
-  });
-
-  renderDropdown('ustensil-filter', utensils, (val) => {
-    if (!selectedUstensils.includes(val)) {
-      selectedUstensils.push(val);
-      updateSelectedFilters();
-      applyFilters();
-    }
-  });
-
-  renderDropdown('appliance-filter', appliances, (val) => {
-    if (!selectedAppliances.includes(val)) {
-      selectedAppliances.push(val);
-      updateSelectedFilters();
-      applyFilters();
-    }
-  });
-
-  renderRecipes(window.recipes);
-});
-
 document.querySelector('.searchBar-input').addEventListener('input', (e) => {
   searchQuery = e.target.value.trim().toLowerCase();
   applyFilters(); // triggers combined search + filters
