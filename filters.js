@@ -1,4 +1,4 @@
-// Filter custom container
+// --- Dropdown Filters (Fixed Version) ---
 
 const dropdownBtn2 = document.getElementById('dropdownButton2');
 const dropdownList2 = document.getElementById('ingredient-filter');
@@ -8,74 +8,56 @@ dropdownText2.textContent = 'Ingrédients';
 
 dropdownBtn2.addEventListener('click', () => {
   const isOpen = dropdownList2.classList.toggle('show');
-
-  // Directly set rotation based on dropdown state
   dropdownIcon2.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-});
-
-dropdownList2.addEventListener('click', (e) => {
-  if (e.target.dataset.value) {
-    dropdownText2.textContent = e.target.dataset.value;
-    dropdownList2.classList.remove('show');
-    dropdownIcon2.style.transform = 'rotate(0deg)';
-  }
 });
 
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.dropdown2')) {
     dropdownList2.classList.remove('show');
     dropdownIcon2.style.transform = 'rotate(0deg)';
+    document.getElementById('ustensil-filter').classList.remove('show');
+    document.getElementById('dropdownIcon3').style.transform = 'rotate(0deg)';
+    document.getElementById('appliance-filter').classList.remove('show');
+    document.getElementById('dropdownIcon4').style.transform = 'rotate(0deg)';
   }
 });
 
 function populateDropdownIngredients(ingredients) {
-  dropdownList2.innerHTML = ''; // Clear previous items
-
-  // Create and insert the search input
+  dropdownList2.innerHTML = '';
   const searchInput = document.createElement('input');
-  searchInput.type = 'text';
-  searchInput.placeholder = '';
   searchInput.className = 'dropdown-search-input';
+  searchInput.placeholder = 'Rechercher...';
   dropdownList2.appendChild(searchInput);
 
-  // Wrapper to re-render filtered list
-  const renderOptions = (filteredIngredients) => {
-    // Remove existing options
+  const renderOptions = (filtered) => {
     dropdownList2
       .querySelectorAll('.dropdown-option')
       .forEach((el) => el.remove());
-
-    filteredIngredients.forEach((ingredient) => {
-      const option = document.createElement('div');
-      option.className = 'dropdown-option';
-      option.textContent = ingredient;
-      option.setAttribute('data-value', ingredient);
-
-      option.addEventListener('click', () => {
+    filtered.forEach((ingredient) => {
+      const opt = document.createElement('div');
+      opt.className = 'dropdown-option';
+      opt.textContent = ingredient;
+      opt.dataset.value = ingredient;
+      opt.addEventListener('click', () => {
         if (!selectedIngredients.includes(ingredient)) {
           selectedIngredients.push(ingredient);
           updateSelectedFilters();
           applyFilters();
-          dropdownText2.textContent = ingredient;
+          text.textContent = 'Ingredients';
           dropdownList2.classList.remove('show');
           dropdownIcon2.style.transform = 'rotate(0deg)';
         }
       });
-
-      dropdownList2.appendChild(option);
+      dropdownList2.appendChild(opt);
     });
   };
 
-  // Initial render
   renderOptions(ingredients);
-
-  // Filter on input
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
-    const filtered = ingredients.filter((ing) =>
-      ing.toLowerCase().includes(query)
+    renderOptions(
+      ingredients.filter((ing) => ing.toLowerCase().includes(query))
     );
-    renderOptions(filtered);
   });
 }
 
@@ -83,10 +65,8 @@ function populateDropdownUtensils(utensils) {
   const list = document.getElementById('ustensil-filter');
   const text = document.getElementById('dropdownText3');
   const icon = document.getElementById('dropdownIcon3');
-  const btn = document.getElementById('dropdownButton3');
 
   list.innerHTML = '';
-
   const searchInput = document.createElement('input');
   searchInput.className = 'dropdown-search-input';
   searchInput.placeholder = 'Rechercher...';
@@ -98,13 +78,13 @@ function populateDropdownUtensils(utensils) {
       const opt = document.createElement('div');
       opt.className = 'dropdown-option';
       opt.textContent = ustensil;
-      opt.setAttribute('data-value', ustensil);
+      opt.dataset.value = ustensil;
       opt.addEventListener('click', () => {
         if (!selectedUstensils.includes(ustensil)) {
           selectedUstensils.push(ustensil);
           updateSelectedFilters();
           applyFilters();
-          text.textContent = ustensil;
+          text.textContent = 'Ustensils';
           list.classList.remove('show');
           icon.style.transform = 'rotate(0deg)';
         }
@@ -114,22 +94,9 @@ function populateDropdownUtensils(utensils) {
   };
 
   renderOptions(utensils);
-
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
     renderOptions(utensils.filter((u) => u.toLowerCase().includes(query)));
-  });
-
-  btn.addEventListener('click', () => {
-    const isOpen = list.classList.toggle('show');
-    icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.dropdown2')) {
-      list.classList.remove('show');
-      icon.style.transform = 'rotate(0deg)';
-    }
   });
 }
 
@@ -137,10 +104,8 @@ function populateDropdownAppliances(appliances) {
   const list = document.getElementById('appliance-filter');
   const text = document.getElementById('dropdownText4');
   const icon = document.getElementById('dropdownIcon4');
-  const btn = document.getElementById('dropdownButton4');
 
   list.innerHTML = '';
-
   const searchInput = document.createElement('input');
   searchInput.className = 'dropdown-search-input';
   searchInput.placeholder = 'Rechercher...';
@@ -152,13 +117,13 @@ function populateDropdownAppliances(appliances) {
       const opt = document.createElement('div');
       opt.className = 'dropdown-option';
       opt.textContent = appliance;
-      opt.setAttribute('data-value', appliance);
+      opt.dataset.value = appliance;
       opt.addEventListener('click', () => {
         if (!selectedAppliances.includes(appliance)) {
           selectedAppliances.push(appliance);
           updateSelectedFilters();
           applyFilters();
-          text.textContent = appliance;
+          text.textContent = 'Appareils';
           list.classList.remove('show');
           icon.style.transform = 'rotate(0deg)';
         }
@@ -168,27 +133,30 @@ function populateDropdownAppliances(appliances) {
   };
 
   renderOptions(appliances);
-
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
     renderOptions(appliances.filter((a) => a.toLowerCase().includes(query)));
-  });
-
-  btn.addEventListener('click', () => {
-    const isOpen = list.classList.toggle('show');
-    icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('#.dropdown2')) {
-      list.classList.remove('show');
-      icon.style.transform = 'rotate(0deg)';
-    }
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const { ingredients, utensils, appliances } = getUniqueValues(window.recipes);
+
+  const utensilBtn = document.getElementById('dropdownButton3');
+  const utensilList = document.getElementById('ustensil-filter');
+  const utensilIcon = document.getElementById('dropdownIcon3');
+  utensilBtn.addEventListener('click', () => {
+    const isOpen = utensilList.classList.toggle('show');
+    utensilIcon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+  });
+
+  const applianceBtn = document.getElementById('dropdownButton4');
+  const applianceList = document.getElementById('appliance-filter');
+  const applianceIcon = document.getElementById('dropdownIcon4');
+  applianceBtn.addEventListener('click', () => {
+    const isOpen = applianceList.classList.toggle('show');
+    applianceIcon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+  });
 
   populateDropdownIngredients(ingredients);
   populateDropdownUtensils(utensils);

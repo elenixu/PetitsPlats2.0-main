@@ -271,7 +271,8 @@ select {
   background: white;
   display: none;
   z-index: 1;
-  overflow-y: auto;
+  overflow-x: hidden;
+
   color: var(--Black, #1b1b1b);
   font-family: Manrope;
   font-size: 14px;

@@ -53,46 +53,37 @@ let selectedUstensils = [];
 let selectedAppliances = [];
 
 function applyFilters() {
-  let filtered = window.recipes;
-
-  // General text search (after 3 letters)
-  if (searchQuery.length >= 3) {
-    filtered = filtered.filter(
-      (recipe) =>
-        recipe.name.toLowerCase().includes(searchQuery) ||
-        recipe.description.toLowerCase().includes(searchQuery) ||
-        recipe.ingredients.some((ing) =>
-          ing.ingredient.toLowerCase().includes(searchQuery)
-        )
-    );
-  }
-
-  // Ingredient tag filters
-  if (selectedIngredients.length > 0) {
-    filtered = filtered.filter((r) =>
-      selectedIngredients.every((ingredient) =>
-        r.ingredients.some((ing) => ing.ingredient.toLowerCase() === ingredient)
+  const filteredRecipes = window.recipes.filter((recipe) => {
+    // Check if all selected ingredients are present
+    const hasIngredients = selectedIngredients.every((tag) =>
+      recipe.ingredients.some(
+        (ing) => ing.ingredient.toLowerCase() === tag.toLowerCase()
       )
     );
-  }
 
-  // Ustensil tag filters
-  if (selectedUstensils.length > 0) {
-    filtered = filtered.filter((r) =>
-      selectedUstensils.every((ustensil) =>
-        r.ustensils.some((u) => u.toLowerCase() === ustensil)
-      )
+    // Check if all selected utensils are present
+    const hasUstensils = selectedUstensils.every((tag) =>
+      recipe.ustensils.map((u) => u.toLowerCase()).includes(tag.toLowerCase())
     );
-  }
 
-  // Appliance tag filters
-  if (selectedAppliances.length > 0) {
-    filtered = filtered.filter((r) =>
-      selectedAppliances.includes(r.appliance.toLowerCase())
+    // Check if selected appliances match
+    const hasAppliances = selectedAppliances.every(
+      (tag) => recipe.appliance.toLowerCase() === tag.toLowerCase()
     );
-  }
 
-  renderRecipes(filtered);
+    return hasIngredients && hasUstensils && hasAppliances;
+  });
+
+  renderRecipes(filteredRecipes);
+
+  // Extract new unique values from filtered recipes
+  const { ingredients, utensils, appliances } =
+    getUniqueValues(filteredRecipes);
+
+  // Re-populate the dropdowns
+  populateDropdownIngredients(ingredients);
+  populateDropdownUtensils(utensils);
+  populateDropdownAppliances(appliances);
 }
 
 // init filters
