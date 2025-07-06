@@ -23,6 +23,9 @@ document.addEventListener('click', (e) => {
 });
 
 function populateDropdownIngredients(ingredients) {
+  const list = document.getElementById('ingredient-filter');
+  const text = document.getElementById('dropdownText2');
+  const icon = document.getElementById('dropdownIcon2');
   dropdownList2.innerHTML = '';
   const searchInput = document.createElement('input');
   searchInput.className = 'dropdown-search-input';
@@ -52,11 +55,13 @@ function populateDropdownIngredients(ingredients) {
     });
   };
 
-  renderOptions(ingredients);
+  renderOptions(ingredients.sort((a, b) => a.localeCompare(b, 'fr')));
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
     renderOptions(
-      ingredients.filter((ing) => ing.toLowerCase().includes(query))
+      ingredients
+        .filter((ing) => ing.toLowerCase().includes(query))
+        .sort((a, b) => a.localeCompare(b, 'fr'))
     );
   });
 }
@@ -93,10 +98,14 @@ function populateDropdownUtensils(utensils) {
     });
   };
 
-  renderOptions(utensils);
+  renderOptions(utensils.sort((a, b) => a.localeCompare(b, 'fr')));
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
-    renderOptions(utensils.filter((u) => u.toLowerCase().includes(query)));
+    renderOptions(
+      utensils
+        .filter((u) => u.toLowerCase().includes(query))
+        .sort((a, b) => a.localeCompare(b, 'fr'))
+    );
   });
 }
 
@@ -132,10 +141,14 @@ function populateDropdownAppliances(appliances) {
     });
   };
 
-  renderOptions(appliances);
+  renderOptions(appliances.sort((a, b) => a.localeCompare(b, 'fr')));
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
-    renderOptions(appliances.filter((a) => a.toLowerCase().includes(query)));
+    renderOptions(
+      appliances
+        .filter((a) => a.toLowerCase().includes(query))
+        .sort((a, b) => a.localeCompare(b, 'fr'))
+    );
   });
 }
 

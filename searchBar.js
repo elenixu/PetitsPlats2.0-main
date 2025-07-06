@@ -53,34 +53,50 @@ let selectedUstensils = [];
 let selectedAppliances = [];
 
 function applyFilters() {
-  const filteredRecipes = window.recipes.filter((recipe) => {
-    // Check if all selected ingredients are present
-    const hasIngredients = selectedIngredients.every((tag) =>
-      recipe.ingredients.some(
-        (ing) => ing.ingredient.toLowerCase() === tag.toLowerCase()
+  let filtered = window.recipes;
+
+  // Search query filter
+  if (searchQuery && searchQuery.length >= 3) {
+    filtered = filtered.filter(
+      (recipe) =>
+        recipe.name.toLowerCase().includes(searchQuery) ||
+        recipe.description.toLowerCase().includes(searchQuery) ||
+        recipe.ingredients.some((ing) =>
+          ing.ingredient.toLowerCase().includes(searchQuery)
+        )
+    );
+  }
+
+  // Ingredient tag filters
+  if (selectedIngredients.length > 0) {
+    filtered = filtered.filter((recipe) =>
+      selectedIngredients.every((tag) =>
+        recipe.ingredients.some(
+          (ing) => ing.ingredient.toLowerCase() === tag.toLowerCase()
+        )
       )
     );
+  }
 
-    // Check if all selected utensils are present
-    const hasUstensils = selectedUstensils.every((tag) =>
-      recipe.ustensils.map((u) => u.toLowerCase()).includes(tag.toLowerCase())
+  // Ustensil tag filters
+  if (selectedUstensils.length > 0) {
+    filtered = filtered.filter((recipe) =>
+      selectedUstensils.every((tag) =>
+        recipe.ustensils.map((u) => u.toLowerCase()).includes(tag.toLowerCase())
+      )
     );
+  }
 
-    // Check if selected appliances match
-    const hasAppliances = selectedAppliances.every(
-      (tag) => recipe.appliance.toLowerCase() === tag.toLowerCase()
+  // Appliance tag filters
+  if (selectedAppliances.length > 0) {
+    filtered = filtered.filter((recipe) =>
+      selectedAppliances.includes(recipe.appliance.toLowerCase())
     );
+  }
 
-    return hasIngredients && hasUstensils && hasAppliances;
-  });
+  renderRecipes(filtered);
 
-  renderRecipes(filteredRecipes);
-
-  // Extract new unique values from filtered recipes
-  const { ingredients, utensils, appliances } =
-    getUniqueValues(filteredRecipes);
-
-  // Re-populate the dropdowns
+  const { ingredients, utensils, appliances } = getUniqueValues(filtered);
   populateDropdownIngredients(ingredients);
   populateDropdownUtensils(utensils);
   populateDropdownAppliances(appliances);
