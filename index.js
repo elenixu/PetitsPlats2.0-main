@@ -5,7 +5,8 @@ function renderRecipes(recipes) {
   const cardContainer = document.getElementById('cards-root');
   cardContainer.innerHTML = ''; // clear previous content
 
-  recipes.forEach((recipe) => {
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
     const card = document.createElement('div');
     card.classList.add('card-container');
 
@@ -17,14 +18,6 @@ function renderRecipes(recipes) {
     img.src = `Assets/JSON recipes/${recipe.image}`;
     img.alt = recipe.name;
 
-    const textBox = document.createElement('div');
-    textBox.classList.add('card-container-text');
-
-    const title = document.createElement('div');
-    title.classList.add('card-recette-titre');
-    title.textContent = recipe.name;
-    textBox.appendChild(title);
-
     const info = document.createElement('div');
     info.classList.add('card-time');
     info.textContent = `${recipe.time}min`;
@@ -32,6 +25,14 @@ function renderRecipes(recipes) {
     imageWrapper.appendChild(img);
     imageWrapper.appendChild(info);
     card.appendChild(imageWrapper);
+
+    const textBox = document.createElement('div');
+    textBox.classList.add('card-container-text');
+
+    const title = document.createElement('div');
+    title.classList.add('card-recette-titre');
+    title.textContent = recipe.name;
+    textBox.appendChild(title);
 
     const recetteTitle = document.createElement('h2');
     recetteTitle.textContent = 'RECETTE';
@@ -43,9 +44,6 @@ function renderRecipes(recipes) {
     description.textContent = recipe.description;
     textBox.appendChild(description);
 
-    card.appendChild(img);
-    card.appendChild(textBox);
-
     const ingredientsTitle = document.createElement('h2');
     ingredientsTitle.textContent = 'Ingrédients';
     ingredientsTitle.className = 'recette-title';
@@ -54,8 +52,10 @@ function renderRecipes(recipes) {
     const ingredientsList = document.createElement('ul');
     ingredientsList.classList.add('card-ingredients');
 
-    recipe.ingredients.forEach((item) => {
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      const item = recipe.ingredients[j];
       const li = document.createElement('li');
+
       const nameSpan = document.createElement('span');
       nameSpan.className = 'ingredient-name';
       nameSpan.textContent = item.ingredient;
@@ -69,12 +69,14 @@ function renderRecipes(recipes) {
       li.appendChild(nameSpan);
       li.appendChild(quantitySpan);
       ingredientsList.appendChild(li);
-    });
+    }
 
     textBox.appendChild(ingredientsList);
+    card.appendChild(textBox);
     cardContainer.appendChild(card);
-    updateCounter();
-  });
+  }
+
+  updateCounter();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

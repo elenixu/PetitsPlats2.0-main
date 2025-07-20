@@ -57,41 +57,92 @@ function applyFilters() {
 
   // Search query filter
   if (searchQuery && searchQuery.length >= 3) {
-    filtered = filtered.filter(
-      (recipe) =>
+    const temp = [];
+    for (let i = 0; i < filtered.length; i++) {
+      const recipe = filtered[i];
+      let match =
         recipe.name.toLowerCase().includes(searchQuery) ||
-        recipe.description.toLowerCase().includes(searchQuery) ||
-        recipe.ingredients.some((ing) =>
-          ing.ingredient.toLowerCase().includes(searchQuery)
-        )
-    );
+        recipe.description.toLowerCase().includes(searchQuery);
+
+      if (!match) {
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+          if (
+            recipe.ingredients[j].ingredient.toLowerCase().includes(searchQuery)
+          ) {
+            match = true;
+            break;
+          }
+        }
+      }
+      if (match) temp.push(recipe);
+    }
+    filtered = temp;
   }
 
   // Ingredient tag filters
   if (selectedIngredients.length > 0) {
-    filtered = filtered.filter((recipe) =>
-      selectedIngredients.every((tag) =>
-        recipe.ingredients.some(
-          (ing) => ing.ingredient.toLowerCase() === tag.toLowerCase()
-        )
-      )
-    );
+    const temp = [];
+    for (let i = 0; i < filtered.length; i++) {
+      const recipe = filtered[i];
+      let allFound = true;
+      for (let j = 0; j < selectedIngredients.length; j++) {
+        let found = false;
+        for (let k = 0; k < recipe.ingredients.length; k++) {
+          if (
+            recipe.ingredients[k].ingredient.toLowerCase() ===
+            selectedIngredients[j].toLowerCase()
+          ) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          allFound = false;
+          break;
+        }
+      }
+      if (allFound) temp.push(recipe);
+    }
+    filtered = temp;
   }
 
   // Ustensil tag filters
   if (selectedUstensils.length > 0) {
-    filtered = filtered.filter((recipe) =>
-      selectedUstensils.every((tag) =>
-        recipe.ustensils.map((u) => u.toLowerCase()).includes(tag.toLowerCase())
-      )
-    );
+    const temp = [];
+    for (let i = 0; i < filtered.length; i++) {
+      const recipe = filtered[i];
+      let allFound = true;
+      for (let j = 0; j < selectedUstensils.length; j++) {
+        let found = false;
+        for (let k = 0; k < recipe.ustensils.length; k++) {
+          if (
+            recipe.ustensils[k].toLowerCase() ===
+            selectedUstensils[j].toLowerCase()
+          ) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          allFound = false;
+          break;
+        }
+      }
+      if (allFound) temp.push(recipe);
+    }
+    filtered = temp;
   }
 
   // Appliance tag filters
   if (selectedAppliances.length > 0) {
-    filtered = filtered.filter((recipe) =>
-      selectedAppliances.includes(recipe.appliance.toLowerCase())
-    );
+    const temp = [];
+    for (let i = 0; i < filtered.length; i++) {
+      const recipe = filtered[i];
+      if (selectedAppliances.includes(recipe.appliance.toLowerCase())) {
+        temp.push(recipe);
+      }
+    }
+    filtered = temp;
   }
 
   renderRecipes(filtered);
