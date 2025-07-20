@@ -3,7 +3,7 @@ let searchQuery = '';
 
 function renderRecipes(recipes) {
   const cardContainer = document.getElementById('cards-root');
-  cardContainer.innerHTML = ''; // clear previous content
+  cardContainer.innerHTML = '';
 
   for (let i = 0; i < recipes.length; i++) {
     const recipe = recipes[i];
@@ -20,7 +20,7 @@ function renderRecipes(recipes) {
 
     const info = document.createElement('div');
     info.classList.add('card-time');
-    info.textContent = `${recipe.time}min`;
+    info.textContent = `${recipe.time} min`; // added space for readability
 
     imageWrapper.appendChild(img);
     imageWrapper.appendChild(info);
