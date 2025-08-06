@@ -152,9 +152,13 @@ body {
   padding: 5px 15px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  font-family: Manrope;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
   position: absolute;
-  transform: translate(288px, 20px);
+  top: 10px;
+  right: 10px;
 }
 
 .card-recette {
