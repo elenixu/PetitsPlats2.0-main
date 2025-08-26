@@ -40,6 +40,8 @@
             <input
               type="text"
               class="searchBar-input"
+              pattern="[^<>]*"
+              title="Les balises &lt; et &gt; ne sont pas autorisées"
               placeholder="Rechercher une recette, un ingrédient, ..."
             />
             <div class="searchBar-button">
@@ -102,7 +104,7 @@
 
     <script src="recipes.js"></script>
     <script src="index.js" defer></script>
-    <script src="searchBar.js"></script>
+    <script src="searchBar.js" defer></script>
     <script src="filters.js" defer></script>
   </body>
 </html>
