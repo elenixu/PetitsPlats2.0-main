@@ -1,3 +1,43 @@
+// Blocker for dropdown search inputs
+function blockAnglesOn(el) {
+  if (!el) return;
+
+  // Block insertions (typing/IME)
+  el.addEventListener('beforeinput', (e) => {
+    const data = e.data ?? '';
+    if (e.inputType.startsWith('insert') && /[<>]/.test(data)) {
+      e.preventDefault();
+    }
+  });
+
+  // Keyboard fallback
+  el.addEventListener('keydown', (e) => {
+    if (e.key === '<' || e.key === '>') e.preventDefault();
+  });
+
+  // Paste cleanup
+  el.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const text =
+      (e.clipboardData || window.clipboardData).getData('text') || '';
+    const cleaned = text.replace(/[<>]/g, '');
+    if (typeof el.setRangeText === 'function') {
+      const { selectionStart, selectionEnd } = el;
+      el.setRangeText(cleaned, selectionStart, selectionEnd, 'end');
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    } else {
+      document.execCommand('insertText', false, cleaned);
+    }
+  });
+
+  // Final safety net
+  el.addEventListener('input', (e) => {
+    const v = e.target.value;
+    const cleaned = v.replace(/[<>]/g, '');
+    if (v !== cleaned) e.target.value = cleaned;
+  });
+}
+
 // --- Dropdown Filters (Fixed Version) ---
 
 const dropdownBtn2 = document.getElementById('dropdownButton2');
@@ -30,6 +70,7 @@ function populateDropdownIngredients(ingredients) {
   const searchInput = document.createElement('input');
   searchInput.className = 'dropdown-search-input';
   searchInput.placeholder = 'Rechercher...';
+  blockAnglesOn(searchInput);
   dropdownList2.appendChild(searchInput);
 
   const renderOptions = (filtered) => {
@@ -75,6 +116,7 @@ function populateDropdownUtensils(utensils) {
   const searchInput = document.createElement('input');
   searchInput.className = 'dropdown-search-input';
   searchInput.placeholder = 'Rechercher...';
+  blockAnglesOn(searchInput);
   list.appendChild(searchInput);
 
   const renderOptions = (filtered) => {
@@ -118,6 +160,7 @@ function populateDropdownAppliances(appliances) {
   const searchInput = document.createElement('input');
   searchInput.className = 'dropdown-search-input';
   searchInput.placeholder = 'Rechercher...';
+  blockAnglesOn(searchInput);
   list.appendChild(searchInput);
 
   const renderOptions = (filtered) => {

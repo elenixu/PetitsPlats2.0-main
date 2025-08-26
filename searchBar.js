@@ -1,9 +1,51 @@
-// Main searchbar
+// Main searchbar (hard-block < and >)
+const mainInput = document.querySelector('.searchBar-input');
 
-document.querySelector('.searchBar-input').addEventListener('input', (e) => {
-  searchQuery = e.target.value.trim().toLowerCase();
-  applyFilters(); // triggers combined search + filters
-});
+function stripAnglesLocal(s) {
+  return String(s ?? '').replace(/[<>]/g, '');
+}
+
+if (!mainInput) {
+  console.error('searchBar-input not found');
+} else {
+  // Blocks insertions from typing/IME before they hit the field
+  mainInput.addEventListener('beforeinput', (e) => {
+    const data = e.data ?? '';
+    if (e.inputType.startsWith('insert') && /[<>]/.test(data)) {
+      e.preventDefault();
+    }
+  });
+
+  // Fallback block on keyboard
+  mainInput.addEventListener('keydown', (e) => {
+    if (e.key === '<' || e.key === '>') e.preventDefault();
+  });
+
+  // Clean pastes
+  mainInput.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const text =
+      (e.clipboardData || window.clipboardData).getData('text') || '';
+    const cleaned = stripAnglesLocal(text);
+    if (typeof mainInput.setRangeText === 'function') {
+      const { selectionStart, selectionEnd } = mainInput;
+      mainInput.setRangeText(cleaned, selectionStart, selectionEnd, 'end');
+      mainInput.dispatchEvent(new Event('input', { bubbles: true }));
+    } else {
+      document.execCommand('insertText', false, cleaned);
+    }
+  });
+
+  // Final safety net + update your search
+  mainInput.addEventListener('input', (e) => {
+    const raw = e.target.value;
+    const cleaned = stripAnglesLocal(raw);
+    if (cleaned !== raw) e.target.value = cleaned; // mirror cleaned text
+
+    searchQuery = cleaned.trim().toLowerCase();
+    applyFilters();
+  });
+}
 
 // extract unique value
 
